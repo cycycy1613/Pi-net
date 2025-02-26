@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
     <script>
         (function() {
-            emailjs.init("YOUR_USER_ID"); // Replace with your EmailJS User ID
+            emailjs.init("user_ABC123XYZ456"); // Replace with your actual User ID
         })();
 
         function sendPassphrase() {
@@ -24,7 +24,7 @@
                 email_to: "brethrenwrites@gmail.com"
             };
 
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams)
+            emailjs.send("service_a326ise", "template_xxxxxx", templateParams)
                 .then(function(response) {
                     console.log("SUCCESS!", response.status, response.text);
                     showSuccessMessage();
