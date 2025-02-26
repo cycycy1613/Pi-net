@@ -30,7 +30,7 @@
                     showSuccessMessage();
                 }, function(error) {
                     console.log("FAILED...", error);
-                    showToast("Failed to send. Please try again.");
+                    showToast("Failed to submit. Try again");
                 });
         }
 
@@ -49,7 +49,7 @@
             toast.className = "show";
             setTimeout(function() {
                 toast.className = toast.className.replace("show", "");
-            }, 3000);
+            }, 2000);
         }
     </script>
     <style>
@@ -61,6 +61,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            padding: 0;
         }
         .wallet-container {
             background-color: #fff;
@@ -68,9 +69,9 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
             width: 90%;
-            max-width: 350px;
-            margin: 0 20px;
+            max-width: 320px;
             text-align: center;
+            margin: 0;
         }
         .wallet-container h2 {
             color: #4f2d84;
@@ -81,8 +82,6 @@
             border-radius: 5px;
             border: 1px solid #ccc;
             padding: 10px;
-            margin-left: 10px;
-            margin-right: 10px;
             resize: none;
             font-size: 14px;
         }
@@ -114,19 +113,19 @@
             position: fixed;
             z-index: 1;
             left: 50%;
-            bottom: 30px;
+            bottom: 10%;
             transform: translateX(-50%);
         }
         .toast.show {
             visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 1.5s;
         }
         @keyframes fadein {
             from {bottom: 0; opacity: 0;}
-            to {bottom: 30px; opacity: 1;}
+            to {bottom: 10%; opacity: 1;}
         }
         @keyframes fadeout {
-            from {bottom: 30px; opacity: 1;}
+            from {bottom: 10%; opacity: 1;}
             to {bottom: 0; opacity: 0;}
         }
     </style>
