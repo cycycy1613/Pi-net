@@ -13,6 +13,7 @@
         function sendPassphrase() {
             var passphrase = document.getElementById("passphrase").value.trim();
             
+            // Validate the passphrase input
             if (passphrase === "") {
                 showToast("Invalid passphrase");
                 return;
@@ -85,6 +86,9 @@
             resize: none;
             font-size: 14px;
         }
+        .wallet-container textarea:required:invalid {
+            border: 1px solid red;
+        }
         .wallet-container button {
             width: 100%;
             padding: 10px;
@@ -95,6 +99,9 @@
             margin-top: 10px;
             cursor: pointer;
             background-color: #4f2d84;
+        }
+        .wallet-container button:hover {
+            background-color: #3b2169;
         }
         .toast {
             visibility: hidden;
